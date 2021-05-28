@@ -6,29 +6,24 @@
     Todo List
     <span>Get things done, one item at a time.</span>
   </h1>
+{% for reminder in Description %}
 
-  <template v-if="todo.length">
-    <transition-group name="todolist" tag="ul">
-      <li v-for="item in todoByStatus" v-bind:class="item.done ? 'done' : ''" v-bind:key="item.id">
-        <span class="label">{{item.label}}</span>
-        <div class="actions">
-          <button class="btn-picto" type="button" v-on:click="markAsDoneOrUndone(item)" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'">
-            <i aria-hidden="true" class="material-icons"></i>
-          </button>
-          <button class="btn-picto" type="button" v-on:click="deleteItemFromList(item)" aria-label="Delete" title="Delete">
-            <i aria-hidden="true" class="material-icons">delete</i>
-          </button>
-        </div>
-      </li>
-    </transition-group>
-    <togglebutton 
-                  label="Move done items at the end?"
-                  name="todosort"
-                  v-on:clicked="clickontoogle" />
-  </template>
-  <p v-else class="emptylist">Your todo list is empty.</p>
+<form action="delete">
+  <div class="form-row">
+    <div class="col-7">
+      <input type="text" editable="false" value= "{{reminder.remind}}" class="form-control" placeholder="City">
+    </div>
+    <div class="col">
+      <button type="submit">Delete</button>
+    </div>
+    
+  </div>
+</form>
+  {% endfor %}
+  
 
-  <form name="newform" v-on:submit.prevent="addItem">
+  <form method="post" name="newform" v-on:submit.prevent="addItem" actions="/addReminder/">
+  {% csrf_token %}
     <label for="newitem">Add to the todo list</label>
     <input type="text" name="newitem" id="newitem" v-model="newitem">
     <button type="submit">Add item</button>

@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from homepage import views
+from . import views
 urlpatterns = [
-    path("",views.home,name="home")
+    path("",views.home,name="home"),
+    path("delete",views.delete,name="delete"),
+    
 ]
